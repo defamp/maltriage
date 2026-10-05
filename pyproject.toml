@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "maltriage"
+version = "1.0.0"
+description = "Triage CAPE/Cuckoo malware sandbox reports into a verdict, MITRE ATT&CK mapping and IOCs."
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [{ name = "Defa Mulya Pratama" }]
+keywords = ["security", "malware-analysis", "sandbox", "cape", "cuckoo", "dfir", "mitre-attack", "ioc", "triage"]
+dependencies = ["rich>=13.0"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.urls]
+Homepage = "https://github.com/defamp/maltriage"
+
+[project.scripts]
+maltriage = "maltriage.cli:main"
+
+[tool.setuptools]
+packages = ["maltriage"]

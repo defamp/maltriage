@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>maltriage — invoice_2026.exe</title>
+<style>
+  :root { --bg:#0f1115; --card:#191c23; --fg:#e6e6e6; --dim:#8a8f99; --accent:#e74c3c; --line:#262b35; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:15px/1.5 -apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--fg); }
+  .wrap { max-width:900px; margin:0 auto; padding:24px 16px; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  .verdict { display:inline-block; padding:4px 14px; border-radius:6px; font-weight:700; background:var(--accent); color:#111; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin:16px 0; }
+  table { width:100%; border-collapse:collapse; }
+  th,td { text-align:left; padding:7px 8px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--dim); font-weight:600; font-size:12px; text-transform:uppercase; letter-spacing:.04em; }
+  code { background:#0c0e12; padding:1px 5px; border-radius:4px; font-size:13px; }
+  .sev { text-align:center; font-weight:700; width:40px; }
+  .sev1 { color:#5dade2; } .sev2 { color:#f1c40f; } .sev3 { color:#e74c3c; }
+  .dim,.fam { color:var(--dim); font-size:13px; }
+  .fam { color:#c39bd3; }
+  ul { margin:6px 0; padding-left:18px; } li { margin:2px 0; }
+  .meta td:first-child { color:var(--dim); width:120px; }
+  footer { color:var(--dim); font-size:12px; margin-top:24px; }
+</style></head>
+<body><div class="wrap">
+  <h1>🧬 invoice_2026.exe</h1>
+  <p><span class="verdict">CRITICAL</span> &nbsp; score 9.2/10 &nbsp; <span class='fam'>Ransom.Filecoder</span></p>
+  <div class="card"><table class="meta">
+    <tr><td>Type</td><td>PE32 executable (GUI) Intel 80386, for MS Windows</td></tr>
+    <tr><td>Size</td><td>261120 bytes</td></tr>
+    <tr><td>MD5</td><td><code>5b9b1d2f8c4a7e3d1f0a2b6c9d8e7f01</code></td></tr>
+    <tr><td>SHA256</td><td><code>9f2c0e1a7b3d4c5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6</code></td></tr>
+    <tr><td>Analysis ID</td><td>42</td></tr>
+  </table></div>
+  <div class="card"><h3>Signatures</h3><table><tr><th>Sev</th><th>Name</th><th>Description</th></tr><tr><td class='sev sev3'>3</td><td><code>disables_security_tools</code></td><td>Attempts to disable Windows Defender real-time protection</td></tr><tr><td class='sev sev3'>3</td><td><code>inhibit_system_recovery</code></td><td>Deletes Volume Shadow Copies to prevent file recovery</td></tr><tr><td class='sev sev3'>3</td><td><code>ransomware_mass_file_write</code></td><td>Writes a large number of files with a uniform extension, consistent with ransomware encryption</td></tr><tr><td class='sev sev2'>2</td><td><code>antisandbox_sleep</code></td><td>Delays execution to evade automated analysis</td></tr><tr><td class='sev sev2'>2</td><td><code>c2_http_beacon</code></td><td>Contacts a remote host over HTTP to retrieve an encryption key</td></tr><tr><td class='sev sev2'>2</td><td><code>creates_suspended_process</code></td><td>Creates a process in a suspended state, likely for code injection</td></tr><tr><td class='sev sev2'>2</td><td><code>persistence_autorun</code></td><td>Installs a Run registry key to survive reboot</td></tr><tr><td class='sev sev1'>1</td><td><code>queries_locale_api</code></td><td>Queries the system locale, possible geofencing</td></tr></table></div>
+  <div class="card"><h3>MITRE ATT&CK</h3><table><tr><th>Technique</th><th>Name</th></tr><tr><td><a href='https://attack.mitre.org/techniques/T1055/012/' target='_blank'><code>T1055.012</code></a></td><td>Process Hollowing</td></tr><tr><td><a href='https://attack.mitre.org/techniques/T1071/001/' target='_blank'><code>T1071.001</code></a></td><td>Web Protocols</td></tr><tr><td><a href='https://attack.mitre.org/techniques/T1486/' target='_blank'><code>T1486</code></a></td><td>Data Encrypted for Impact</td></tr><tr><td><a href='https://attack.mitre.org/techniques/T1490/' target='_blank'><code>T1490</code></a></td><td>Inhibit System Recovery</td></tr><tr><td><a href='https://attack.mitre.org/techniques/T1497/001/' target='_blank'><code>T1497.001</code></a></td><td>System Checks</td></tr><tr><td><a href='https://attack.mitre.org/techniques/T1547/001/' target='_blank'><code>T1547.001</code></a></td><td>Registry Run Keys / Startup Folder</td></tr><tr><td><a href='https://attack.mitre.org/techniques/T1562/001/' target='_blank'><code>T1562.001</code></a></td><td>Disable or Modify Tools</td></tr><tr><td><a href='https://attack.mitre.org/techniques/T1614/001/' target='_blank'><code>T1614.001</code></a></td><td>System Language Discovery</td></tr></table></div>
+  <div class="card"><h3>IOCs (12)</h3>
+    <h4>Domains</h4><ul><li><code>paymentgate-decrypt.top</code></li><li><code>api.ipify.org</code></li></ul>
+    <h4>IPs</h4><ul><li><code>185.220.101.44</code></li><li><code>104.26.12.205</code></li></ul>
+    <h4>URLs</h4><ul><li><code>http://paymentgate-decrypt.top/gate.php?id=VICTIM01</code></li><li><code>http://api.ipify.org/</code></li></ul>
+    <h4>Dropped files</h4><ul><li><code>READ_ME_DECRYPT.txt</code> <span class='dim'>ASCII text 0011223344556677889900aabbccddee</span></li><li><code>svchosts.exe</code> <span class='dim'>PE32 executable ffeeddccbbaa00998877665544332211</span></li></ul>
+    <h4>Registry keys</h4><ul><li><code>HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run\decryptor</code></li><li><code>HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware</code></li></ul>
+    <h4>Mutexes</h4><ul><li><code>Global\FileCoder_7f3a9b</code></li><li><code>DC_MUTEX-VICTIM01</code></li></ul>
+  </div>
+  <footer>Generated by maltriage · offline, no API keys.</footer>
+</div></body></html>
