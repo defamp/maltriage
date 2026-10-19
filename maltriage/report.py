@@ -1,8 +1,10 @@
-"""Render a :class:`TriageResult` to terminal, Markdown, HTML or JSON."""
+"""Render a :class:`TriageResult` to terminal, Markdown, HTML, JSON or IOC CSV."""
 
 from __future__ import annotations
 
+import csv
 import html
+import io
 import json
 from typing import List
 
@@ -164,6 +166,33 @@ def render_json(result: TriageResult, iocs_only: bool = False) -> str:
     else:
         payload = result.to_dict()
     return json.dumps(payload, indent=2)
+
+
+def render_iocs_csv(result: TriageResult) -> str:
+    """Export one IOC per row, including dropped-file identity and hashes.
+
+    Formula-like cell values are prefixed with an apostrophe for spreadsheet
+    use. JSON exports retain original values for exact machine consumption.
+    """
+    def cell(value) -> str:
+        value = "" if value is None else str(value)
+        if value.startswith(("\t", "\r", "\n")) or value.lstrip(" \t\r\n").startswith(("=", "+", "-", "@")):
+            return "'" + value
+        return value
+
+    out = io.StringIO(newline="")
+    writer = csv.writer(out, lineterminator="\n")
+    writer.writerow(["type", "value", "sha256", "file_type"])
+    iocs = result.iocs
+    for kind, values in (
+        ("domain", iocs.domains), ("ip", iocs.ips), ("url", iocs.urls),
+        ("registry_key", iocs.registry_keys), ("mutex", iocs.mutexes),
+    ):
+        for value in values:
+            writer.writerow([kind, cell(value), "", ""])
+    for drop in iocs.dropped:
+        writer.writerow(["dropped_file", cell(drop.name), cell(drop.sha256), cell(drop.type)])
+    return out.getvalue()
 
 
 # --------------------------------------------------------------------------- #

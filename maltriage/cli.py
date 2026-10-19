@@ -9,7 +9,7 @@ from . import __version__
 from .analyzer import analyze
 from .models import FAILING_VERDICTS
 from .parser import ReportError, parse
-from .report import render_html, render_json, render_markdown, render_terminal
+from .report import render_html, render_iocs_csv, render_json, render_markdown, render_terminal
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -22,9 +22,9 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument(
         "-f",
         "--format",
-        choices=["term", "md", "html", "json"],
+        choices=["term", "md", "html", "json", "csv"],
         default="term",
-        help="output format (default: term)",
+        help="output format (default: term; csv exports IOCs only)",
     )
     p.add_argument("-o", "--output", help="write output to a file instead of stdout")
     p.add_argument(
@@ -69,14 +69,16 @@ def main(argv=None) -> int:
             text = render_html(result, args.min_severity)
         elif args.format == "json":
             text = render_json(result, iocs_only=args.iocs_only)
+        elif args.format == "csv":
+            text = render_iocs_csv(result)
         else:  # term output redirected to a file -> fall back to markdown
             text = render_markdown(result, args.min_severity)
         if args.output:
-            with open(args.output, "w", encoding="utf-8") as fh:
+            with open(args.output, "w", encoding="utf-8", newline="" if args.format == "csv" else None) as fh:
                 fh.write(text)
             print(f"wrote {args.format} report to {args.output}", file=sys.stderr)
         else:
-            print(text)
+            print(text, end="" if args.format == "csv" else "\n")
 
     if not args.no_fail and result.verdict in FAILING_VERDICTS:
         return 1
