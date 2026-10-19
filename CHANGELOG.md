@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.1.1 — 2026-10-19
+
+- Use CRLF CSV record separators so embedded carriage returns are quoted correctly on Python 3.8/3.10 as well as newer Python versions.
+- Add a regression test for embedded carriage returns; 38 tests pass locally.
+
 ## v1.1.0 — 2026-10-19
 
 - Add `--format csv` for offline IOC export, with `type,value,sha256,file_type` columns.

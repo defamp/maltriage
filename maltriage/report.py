@@ -181,7 +181,7 @@ def render_iocs_csv(result: TriageResult) -> str:
         return value
 
     out = io.StringIO(newline="")
-    writer = csv.writer(out, lineterminator="\n")
+    writer = csv.writer(out, lineterminator="\r\n")
     writer.writerow(["type", "value", "sha256", "file_type"])
     iocs = result.iocs
     for kind, values in (

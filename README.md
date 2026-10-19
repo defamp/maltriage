@@ -71,7 +71,7 @@ maltriage samples/report.json
 | `--iocs-only` | With `-f json`, emit just the IOC block; CSV is always IOC-only. |
 | `--no-fail` | Always exit `0` (don't signal verdict via exit code). |
 
-### IOC CSV export (v1.1.0)
+### IOC CSV export (v1.1.1)
 
 `-f csv` emits one row per extracted IOC, including dropped files. It does not
 include the sample metadata, score, signatures or ATT&CK mapping.
@@ -83,7 +83,7 @@ include the sample metadata, score, signatures or ATT&CK mapping.
 | `sha256` | Dropped-file SHA256 when present, otherwise empty. |
 | `file_type` | Dropped-file type when present, otherwise empty. |
 
-The output is UTF-8 CSV with a header row. Commas, quotes and multiline values
+The output is UTF-8 CSV with a header row and CRLF record separators. Commas, quotes and multiline values
 are quoted by Python's CSV writer. Empty IOC sets produce only the header.
 Network/host IOCs retain the parser's existing deduplication behavior; dropped
 file records retain their existing order and are not newly deduplicated.

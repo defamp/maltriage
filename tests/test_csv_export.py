@@ -33,7 +33,7 @@ def test_csv_exports_all_ioc_types_and_dropped_hashes():
 
 def test_empty_iocs_export_header_only():
     result = TriageResult(sample=SampleInfo())
-    assert render_iocs_csv(result) == 'type,value,sha256,file_type\n'
+    assert render_iocs_csv(result) == 'type,value,sha256,file_type\r\n'
 
 
 def test_unicode_commas_quotes_and_multiline_roundtrip():
@@ -94,6 +94,15 @@ def test_cli_csv_clean_and_input_error(tmp_path, capsys):
     clean = tmp_path / 'clean.json'
     clean.write_text(json.dumps({'info': {'score': 0}, 'signatures': []}))
     assert main([str(clean), '-f', 'csv']) == 0
-    assert capsys.readouterr().out == 'type,value,sha256,file_type\n'
+    assert capsys.readouterr().out == 'type,value,sha256,file_type\r\n'
     assert main([str(tmp_path / 'missing.json'), '-f', 'csv', '--no-fail']) == 2
     assert 'file not found' in capsys.readouterr().err
+
+
+def test_embedded_carriage_return_preserves_a_single_indicator():
+    value = 'HKCU\\Software\\first\rsecond'
+    result = TriageResult(sample=SampleInfo(), iocs=IOCs(registry_keys=[value]))
+    text = render_iocs_csv(result)
+    assert text.endswith('\r\n')
+    assert len(rows(text)) == 1
+    assert rows(text)[0]['value'] == value
